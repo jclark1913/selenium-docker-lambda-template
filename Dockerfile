@@ -14,3 +14,4 @@ RUN pip install selenium==4.18.1
 COPY --from=build /opt/chrome-linux64 /opt/chrome
 COPY --from=build /opt/chromedriver-linux64 /opt/
 COPY main.py ./
+CMD [ "main.handler" ]

@@ -12,7 +12,6 @@ provider:
 
 functions:
   get_page_source:
-    handler: main.handler
     timeout: 60
     # If you experience any errors such as Chrome crashing or not being available you might need to increase the storage available to your Lambda Function. See #102
     memorySize: 2048
