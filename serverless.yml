@@ -22,3 +22,4 @@ functions:
       - http:
           path: /get_page_source
           method: post
+          integration: lambda
