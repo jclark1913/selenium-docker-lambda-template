@@ -4,12 +4,18 @@ from selenium.webdriver.common.by import By
 import json
 
 
-def handler(event=None, context=None):
+def handler(event, context):
     options = webdriver.ChromeOptions()
     service = webdriver.ChromeService("/opt/chromedriver")
 
-    body = json.loads(event["body"])
-    url = body['url']
+    if isinstance(event["body"], dict):
+        body = event["body"]
+        url = body["url"]
+    else:
+        body = json.loads(event["body"])
+        url = body['url']
+
+    print("## URL: ", url)
 
     options.binary_location = '/opt/chrome/chrome'
     options.add_argument("--headless=new")
@@ -28,22 +34,8 @@ def handler(event=None, context=None):
     chrome = webdriver.Chrome(options=options, service=service)
     chrome.get(url)
 
-    return chrome.page_source
-
-# def get_page_source(event, context):
-#     try:
-#         body = json.loads(event["body"])
-#         url = body["url"]
-#     except Exception as e:
-#         return {"statusCode": 400, "body": "Invalid request body"}
-
-#     driver = setup_driver()
-
-#     try:
-#         page_source = get_page_source_from_generic_url(driver, url)
-#     except Exception as e:
-#         driver.quit()
-#         return {"statusCode": 500, "body": f"Error getting {url}: {e}"}
-
-#     driver.quit()
-#     return {"statusCode": 200, "body": page_source}
+    return {
+        "statusCode": 200,
+        "headers": {'Content-Type': 'text/html'},
+        "body": chrome.page_source
+    }
