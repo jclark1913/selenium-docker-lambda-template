@@ -1,4 +1,4 @@
-# docker-selenium-lambda-format
+# docker-selenium-lambda-template
 
 A basic configuration for setting up a Lambda function that uses Selenium and a stable Chrome webdriver (as of Feb 22, 2024) to scrape the source of a single webpage. Includes Dockerfile and serverless.yml w/ necessary dependencies.
 
